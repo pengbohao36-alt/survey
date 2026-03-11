@@ -1,0 +1,50 @@
+@import "tailwindcss";
+
+@theme {
+  --color-primary-start: #3b82f6;
+  --color-primary-end: #8b5cf6;
+  --color-glass-bg: rgba(255, 255, 255, 0.15);
+  --color-glass-border: rgba(255, 255, 255, 0.2);
+  --color-glass-bg-dark: rgba(0, 0, 0, 0.25);
+  --color-glass-border-dark: rgba(255, 255, 255, 0.08);
+
+  --font-sans: 'Inter', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+}
+
+@layer base {
+  body {
+    @apply antialiased min-h-screen text-slate-800 dark:text-slate-100 flex flex-col selection:bg-fuchsia-300 selection:text-fuchsia-900;
+    font-family: var(--font-sans);
+    background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+    background-size: 400% 400%;
+    animation: gradientBG 15s ease infinite;
+  }
+}
+
+@keyframes gradientBG {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@layer components {
+  .glass-panel {
+    @apply bg-glass-bg border border-glass-border backdrop-blur-xl shadow-[0_8px_32px_0_rgba(31,38,135,0.37)] rounded-3xl dark:bg-glass-bg-dark dark:border-glass-border-dark;
+  }
+
+  .glass-input {
+    @apply w-full bg-white/20 dark:bg-black/20 border border-white/30 dark:border-white/10 rounded-xl px-5 py-4 focus:outline-none focus:ring-2 focus:ring-fuchsia-400 focus:border-transparent transition-all duration-300 placeholder-slate-700/50 dark:placeholder-slate-300/50 backdrop-blur-md;
+  }
+
+  .glass-button {
+    @apply px-8 py-4 font-semibold rounded-full bg-white/20 dark:bg-white/10 hover:bg-white/30 dark:hover:bg-white/20 border border-white/30 dark:border-white/10 backdrop-blur-md transition-all duration-300 ease-out shadow-lg hover:shadow-xl hover:-translate-y-1 active:translate-y-0 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:translate-y-0 disabled:hover:shadow-lg flex items-center justify-center gap-2;
+  }
+
+  /* Fancy animated text gradient */
+  .text-gradient {
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    @apply bg-gradient-to-r from-white to-white/70;
+  }
+}
