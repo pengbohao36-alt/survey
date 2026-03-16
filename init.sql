@@ -13,7 +13,7 @@ CREATE TABLE IF NOT EXISTS public.questions (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   survey_id UUID REFERENCES public.surveys(id) ON DELETE CASCADE,
   question_text TEXT NOT NULL,
-  type TEXT NOT NULL CHECK (type IN ('text', 'choice', 'rating')),
+  type TEXT NOT NULL CHECK (type IN ('text', 'choice', 'rating', 'multi-choice')),
   options JSONB, -- Array of strings for choices
   "order" INTEGER NOT NULL,
   created_at TIMESTAMP WITH TIME ZONE DEFAULT timezone('utc'::text, now()) NOT NULL

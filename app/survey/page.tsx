@@ -32,28 +32,19 @@ export default function SurveyPage() {
 
   useEffect(() => {
     async function loadQuestions() {
+      // Temporarily forcing fallback questions to ensure immediate update on Vercel
+      // while the database content is being synced/updated.
+      setQuestions(FALLBACK_QUESTIONS);
+      setLoading(false);
+      
       try {
         const { data: surveyData } = await supabase.from("surveys").select("id").limit(1).single();
         if (surveyData) {
           setSurveyId(surveyData.id);
-          const { data: qData, error } = await supabase
-            .from("questions")
-            .select("*")
-            .eq("survey_id", surveyData.id)
-            .order("order", { ascending: true });
-            
-          if (error) throw error;
-          if (qData && qData.length > 0) {
-            setQuestions(qData);
-            setLoading(false);
-            return;
-          }
         }
       } catch (e) {
-        console.log("Using fallback questions manually (DB down or missing keys).");
+        console.log("DB check failed or missing keys.");
       }
-      setQuestions(FALLBACK_QUESTIONS);
-      setLoading(false);
     }
     loadQuestions();
   }, []);
